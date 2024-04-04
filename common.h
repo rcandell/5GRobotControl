@@ -1,13 +1,25 @@
+//
 
+// structure for a command message from the client
 typedef struct {
-  float v_left;
-  float v_right;
-  float v_up;
-  float v_down;
-  float v_fwd;
-  float v_bwd;
-  float thetadot_left;
-  float thetadot_right;
-  float thetadot_up;
-  float thetadot_down;
+  
+  // velocities for movement in workplane
+  // Comes from LEFT Thumb Controller
+  float v_horizontal;     // LEFT/RIGHT
+  float v_vertical;       // UP/DN
+
+  // velocities for movement forward and backwards
+  // comes from left and right trigger buttons
+  float v_fwd;      // Forward
+  float v_bwd;      // Backwards
+
+  // velocities for rotation of end effector
+  // Comes from RIGHT Thumb Controller
+  float thetadot_horizontal;  
+  float thetadot_vertical;
+
+  // indication messages
+  // Comes from the buttons
+  bool  btnA, btnB, btnX, btnY;
+
 } VelocityControllerMessage;
