@@ -17,6 +17,7 @@
 
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
+#include <boost/algorithm/string.hpp>
 
 using boost::asio::ip::udp;
 
@@ -28,7 +29,8 @@ using boost::asio::ip::udp;
 #include <math.h>
 #include <utility>
 
-#include <boost/algorithm/string.hpp>
+#include <common.h>
+
 
 using boost::asio::ip::udp;
 using namespace std;
@@ -82,17 +84,37 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	// open UDP socket
+	// UDP server
+	try
+    {
+        boost::asio::io_context io_context;
+        udp::socket socket(io_context, udp::endpoint(udp::v4(), serverPort));
+        std::cout << "Created UDP listener socket on port: " << serverPort << std::endl;
+        for (;;)
+        {
+            udp::endpoint remote_endpoint;
+            VelocityControllerMessage msg;
+            socket.receive(
+                boost::asio::buffer((void *)&msg,
+                sizeof(VelocityControllerMessage))
+            );
+
+            // print what we received
+            std::cout << msg << std::endl;
+
+            // write data to shared memory
+
+        }
+
+      }
+      catch (std::exception& e)
+      {
+        std::cerr << e.what() << std::endl;
+      }
 
 
-	// wait for data
+    // close UDP socket
 
-
-	// write data to shared memory
-
-
-	// close UDP socket
-	
 
 	return 0;
 }

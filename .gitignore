@@ -31,6 +31,10 @@
 *.out
 *.app
 
-build
-.vscode
+# specific to CodeBlocks IDE
+*.layout
+*.depend
+# generated directories
+bin/
+obj/
 
