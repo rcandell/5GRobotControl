@@ -7,30 +7,10 @@
 * License:      Public Domain
 
 */
-// rtclient.cpp : Defines the main() entry point for the console application.
+// main.cpp : Defines the main() entry point for the console application.
 //
 
-#include <boost/system/config.hpp>
-#include <boost/program_options.hpp>
-#include <boost/interprocess/shared_memory_object.hpp>
-#include <boost/interprocess/mapped_region.hpp>
-
-#include <boost/array.hpp>
-#include <boost/asio.hpp>
-#include <boost/algorithm/string.hpp>
-
-using boost::asio::ip::udp;
-
-#define CMD_SHMEM_NAME ("cmd_shmem")
-
-#include <fstream>
-#include <iostream>
-#include <iomanip>
-#include <math.h>
-#include <utility>
-
 #include <common.h>
-
 
 using boost::asio::ip::udp;
 using namespace std;
@@ -68,22 +48,6 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	// set up the shared memory for the command messages to the ROS controller
-	using namespace boost::interprocess;
-	try
-	{
-		if (vm.count("x"))
-		{
-			shared_memory_object msg_shm(open_only, CMD_SHMEM_NAME, read_write);
-			mapped_region reg_msg(msg_shm, read_write);
-		}
-	}
-	catch (interprocess_exception & ex)
-	{
-		std::cout << ex.what() << std::endl;
-		return 1;
-	}
-
 	// UDP server
 	try
     {
@@ -93,16 +57,24 @@ int main(int argc, char* argv[])
         for (;;)
         {
             udp::endpoint remote_endpoint;
-            VelocityControllerMessage msg;
+            char msg[256];
             socket.receive(
                 boost::asio::buffer((void *)&msg,
-                sizeof(VelocityControllerMessage))
-            );
+                sizeof(msg)
+            ));
 
-            // print what we received
+            std::cout << "received a message" << std::endl;
             std::cout << msg << std::endl;
 
-            // write data to shared memory
+            // print what we received
+            std::istringstream ssin(msg);
+            VelocityControllerMessage vcmsg;
+            ssin >> vcmsg;
+            std::cout << vcmsg << std::endl<< std::endl;
+
+            // convert to "twist" type of ROS message
+
+            // Publish to ROS "twist" topic
 
         }
 
@@ -111,9 +83,6 @@ int main(int argc, char* argv[])
       {
         std::cerr << e.what() << std::endl;
       }
-
-
-    // close UDP socket
 
 
 	return 0;

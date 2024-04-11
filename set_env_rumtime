@@ -1,0 +1,2 @@
+LD_LIBRARY_PATH=.:/home/rick/src/boost_1_84_0/stage/lib:/home/rick/src/boost_1_84_0/stage/lib
+env | grep LD
