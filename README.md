@@ -6,5 +6,8 @@ This demonstation sets up a UDP server for receiving the Xinput vector from a re
 # Dependencies
 This code requires Boost 1.84 or compatible.  The software design utilizes the program_options and asio libraries from Boost.
 
+CodeBlocks was used as an IDE.  The user is free to use whatever toolchain that he is comfortable with.
+
+
 
 
