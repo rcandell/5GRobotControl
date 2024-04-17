@@ -68,3 +68,22 @@ std::ostringstream& operator<< (std::ostringstream& lhs, const VelocityControlle
 
     return lhs;
 }
+
+std::string VelocityControllerMessage::to_json()
+{
+    std::ostringstream oss;
+    std::string jstr;
+    oss     << "{"
+            << "\"v_hor\":"     << this->v_horizontal           << ","
+            << "\"v_ver\":"     << this->v_vertical             << ","
+            << "\"v_fwd\":"      << this->v_fwd                  << ","
+            << "\"tdot_hor\":"  << this->thetadot_horizontal    << ","
+            << "\"tdot_ver\":"  << this->thetadot_vertical      << ","
+            << "\"btnA\":"      << this->btnA                   << ","
+            << "\"btnB\":"      << this->btnB                   << ","
+            << "\"btnX\":"      << this->btnX                   << ","
+            << "\"btnY\":"      << this->btnY
+            << "}" << '\0';
+    jstr = oss.str();
+    return jstr;
+}

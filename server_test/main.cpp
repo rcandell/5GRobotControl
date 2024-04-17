@@ -10,6 +10,7 @@
 // main.cpp : Defines the main() entry point for the console application.
 //
 
+#define USE_JSON_STR (0)
 
 #include <common.h>
 
@@ -74,19 +75,22 @@ int main(int argc, char* argv[])
 
         std::cout << msg << std::endl;
 
-        std::ostringstream ssout;
-        ssout << msg;
-        std::cout << ssout.str() << std::endl;
-
-        //char* msg_as_char = static_cast<char*>(static_cast<void*>(&msg));
-
-        //char* msg_as_char = reinterpret_cast<char*>(&msg);
-        std::string send_buf(ssout.str());
-        socket.send_to(boost::asio::buffer(send_buf), receiver_endpoint);
-        std::cout << "Sent the message" << std::endl;
-
-        //socket.send_to(boost::asio::buffer(send_buf), receiver_endpoint);
-
+        if( USE_JSON_STR )
+        {
+            std::string jstr = msg.to_json();
+            socket.send_to(boost::asio::buffer(jstr), receiver_endpoint);
+            std::cout << "Sent the message as json" << std::endl;
+            std::cout << jstr << std::endl;
+        }
+        else
+        {
+            std::ostringstream ssout;
+            ssout << msg;
+            std::cout << ssout.str() << std::endl;
+            std::string send_buf(ssout.str());
+            socket.send_to(boost::asio::buffer(send_buf), receiver_endpoint);
+            std::cout << "Sent the message" << std::endl;
+        }
     }
     catch (std::exception& e)
     {

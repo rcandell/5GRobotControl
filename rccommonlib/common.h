@@ -31,6 +31,9 @@ typedef struct {
   // Comes from the buttons
   bool  btnA, btnB, btnX, btnY;
 
+  public:
+    std::string to_json();
+
 } VelocityControllerMessage;
 
 // printing operator
