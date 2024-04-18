@@ -39,8 +39,11 @@ def main():
             print("Received from %s the bytes %s" % (from_addr, data))
             msg_parts = parse_msg_bytes(data)
             print(str(msg_parts) + '\n'*3)
+            # convert to colecity twist message and pass on to velocity controller
+
         except TimeoutError:
             print("Timeout occurred")
+            # set values to all stop, all zeros
 
 
 if __name__ == "__main__":
