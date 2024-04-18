@@ -41,7 +41,7 @@ def main():
             print(str(msg_parts) + '\n'*3)
             # convert to velocity twist message and pass on to velocity controller
 
-        except TimeoutError:
+        except socket.timeout:
             print("Timeout occurred")
             # set values to all stop, all zeros
 
