@@ -3,6 +3,7 @@ _CompileInfo
 *.tclrs
 *tsproj.bak
 *~u
+*.~u
 *.tizip
 *_boot.tizip
 *.compiled-library
