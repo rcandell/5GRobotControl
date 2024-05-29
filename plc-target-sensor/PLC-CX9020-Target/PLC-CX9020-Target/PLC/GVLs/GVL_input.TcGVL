@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="GVL_input" Id="{d4ce75da-442b-40ae-af23-1b270cc8fbe1}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+
+	sensor AT%I*: ARRAY[1..8] OF BOOL;
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
